@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="SQLKPI.AbstractREST">
+<Super>%CSP.REST</Super>
+<TimeCreated>64244,40123.382009</TimeCreated>
+</Class>
+</Export>
