@@ -8,6 +8,8 @@
 <XMLNamespace>http://www.intersystems.com/urlmap</XMLNamespace>
 <Data><![CDATA[
 <Routes>
+<Route Url="/sql" Method="POST" Call="executeSQL"/>
+<Route Url="/kpi" Method="POST" Call="generateKPI"/>
 <Route Url="/logout" Method="GET" Call="logout"/>
 <Route Url="/test" Method="GET" Call="test"/>
 </Routes>
@@ -35,6 +37,21 @@ Test</Description>
 <Implementation><![CDATA[
     write "{""Status"": ""OK""}"
     return $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="executeSQL">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>sql:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim sc As %Status = $$$OK
+	set provider = ##class(%ZEN.Auxiliary.altJSONSQLProvider).%New()
+	set provider.maxRows = $$$MaxCacheInt
+	set provider.%Format = "tw"
+	set provider.sql = %request.Content.SQL
+	set sc = provider.%DrawJSON()
+	return sc
 ]]></Implementation>
 </Method>
 </Class>
