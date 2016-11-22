@@ -42,7 +42,6 @@ Test</Description>
 
 <Method name="executeSQL">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>sql:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	#dim sc As %Status = $$$OK
@@ -52,6 +51,20 @@ Test</Description>
 	set provider.sql = %request.Content.SQL
 	set sc = provider.%DrawJSON()
 	return sc
+]]></Implementation>
+</Method>
+
+<Method name="generateKPI">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set sql = %request.Content.SQL
+	set name = %request.Content.Name
+	set class = %request.Content.Class
+	
+	// TODO check that it's valid
+	
+	return ##class(SQLKPI.Generator).generateKPIClass(sql, name, class)
 ]]></Implementation>
 </Method>
 </Class>
