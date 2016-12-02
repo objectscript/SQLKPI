@@ -1,0 +1,67 @@
+<html>
+<head>
+
+	<!-- Put your page Title here -->
+	<title>	Cache Server Page </title>
+
+	<script src=".\libs\js\jquery-3.1.1.min.js"></script>
+	<script src=".\libs\js\angular.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href=".\libs\css\bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href=".\libs\css\bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src=".\libs\js\bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href=".\src\css\main.css">
+	<script src=".\src\js\myApp.js"></script>
+</head>
+
+<body  ng-app="myApp" ng-controller="myCtrl">
+
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">SQLKPI</a>
+			</div>
+		</div>
+	</nav>
+	<div class="row">
+		<div class="col-sm-2"></div>
+
+		<div class="col-sm-8">
+			<div  class="row">
+				<h3>ExecuteSQL</h3>
+				<div class="form-group">
+					<label >SQL:</label>
+					<input type="text" class="form-control" ng-model="execute.sql">
+
+					<button type="button" class="btn btn-primary pull-right" ng-click="executeSQL(execute.sql)">Execute SQL</button>
+				</div>
+			</div>
+			<div  class="row">
+				<h3>GenerateKPI</h3>
+				<div class="form-group">
+					<label>SQL:</label>
+					<input type="text" class="form-control" ng-model="generate.sql">
+
+					<label>Name:</label>
+					<input type="text" class="form-control" ng-model="generate.name">
+
+					<label>Class:</label>
+					<input type="text" class="form-control" ng-model="generate.className">
+					<button type="button" class="btn btn-primary pull-right" ng-click="generateKPI(generate.sql, generate.name, generate.className)">Generate KPI</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-2"></div>
+	</div>
+
+
+
+</body>
+</html>
+
