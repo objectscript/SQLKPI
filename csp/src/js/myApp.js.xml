@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="src/js/myApp.js" application="/csp/sqlkpi/" default="1"><![CDATA[
 var app = angular.module('myApp', []);
 
 
@@ -47,3 +50,5 @@ app.controller('myCtrl', function($scope, $http) {
 		});
 	};
 });
+]]></CSP>
+</Export>
