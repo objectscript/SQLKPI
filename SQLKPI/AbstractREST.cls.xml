@@ -4,6 +4,10 @@
 <Super>%CSP.REST</Super>
 <TimeCreated>64244,40123.382009</TimeCreated>
 
+<Parameter name="HandleCorsRequest">
+<Default>1</Default>
+</Parameter>
+
 <Parameter name="UseSession">
 <Type>Integer</Type>
 <Default>1</Default>
