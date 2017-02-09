@@ -1,1 +1,11 @@
+<cspapp>/index.csp
+<cspapp>/libs/css/bootstrap-theme.min.css
+<cspapp>/libs/css/bootstrap-theme.min.css.map
+<cspapp>/libs/css/bootstrap.min.css
+<cspapp>/libs/css/bootstrap.min.css.map
+<cspapp>/libs/js/angular.min.js
+<cspapp>/libs/js/bootstrap.min.js
+<cspapp>/libs/js/jquery-3.1.1.min.js
+<cspapp>/src/css/main.css
+<cspapp>/src/js/myApp.js
 SQLKPI.pkg
