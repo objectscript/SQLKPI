@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
-<CSP name="libs/css/bootstrap.min.css" application="/csp/sqlkpi/" default="1"><![CDATA[
+<CSP name="css/bootstrap.min.css" application="/csp/devsqlkpi/" default="1"><![CDATA[
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
