@@ -1,26 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25">
-<Class name="SQLKPI.AbstractREST">
-<Super>%CSP.REST</Super>
-<TimeCreated>64244,40123.382009</TimeCreated>
+Class SQLKPI.AbstractREST Extends %CSP.REST
+{
 
-<Parameter name="HandleCorsRequest">
-<Default>1</Default>
-</Parameter>
+Parameter HandleCorsRequest = 1;
 
-<Parameter name="UseSession">
-<Type>Integer</Type>
-<Default>1</Default>
-</Parameter>
+Parameter UseSession As Integer = 1;
 
-<Method name="outputStatus">
-<Description>
-This method takes a status, renders it as jason (if requested) and outputs the result</Description>
-<Internal>1</Internal>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pSC:%Status</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// This method takes a status, renders it as jason (if requested) and outputs the result
+ClassMethod outputStatus(pSC As %Status) As %Status [ Internal ]
+{
     #dim tSC As %Status = $$$OK
     #dim e As %Exception.AbstractException
     
@@ -56,13 +43,10 @@ This method takes a status, renders it as jason (if requested) and outputs the r
         Set tSC = e.AsStatus()
     }
     Quit $$$OK
-]]></Implementation>
-</Method>
+}
 
-<Method name="getDebugInfo">
-<ClassMethod>1</ClassMethod>
-<ReturnType>%ZEN.proxyObject</ReturnType>
-<Implementation><![CDATA[
+ClassMethod getDebugInfo() As %ZEN.proxyObject
+{
 	set obj = ##class(%ZEN.proxyObject).%New()
 	set obj.stack = ..getStackInfo()
 	set obj.objlasterror = $system.Status.GetErrorText($get(%objlasterror))
@@ -72,13 +56,10 @@ This method takes a status, renders it as jason (if requested) and outputs the r
 	set obj.user = $username 
 	
 	return obj
-]]></Implementation>
-</Method>
+}
 
-<Method name="getStackInfo">
-<ClassMethod>1</ClassMethod>
-<ReturnType>%ListOfDataTypes</ReturnType>
-<Implementation><![CDATA[
+ClassMethod getStackInfo() As %ListOfDataTypes
+{
 
 	set ex = ##class(%Exception.SystemException).%New()
 	do ex.StackAsArray(.stack)
@@ -92,28 +73,20 @@ This method takes a status, renders it as jason (if requested) and outputs the r
 	}
 	
 	return list
-]]></Implementation>
-</Method>
+}
 
-<Method name="OnPreDispatch">
-<Description>
-This method Gets called prior to dispatch of the request. Put any common code here
-that you want to be executed for EVERY request. If pContinue is set to 0, the
-request will NOT be dispatched according to the UrlMap. If this case it's the
-responsibility of the user to return a response.</Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec><![CDATA[pUrl:%String,pMethod:%String,&pContinue:%Boolean]]></FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[    Quit ..convertRequestBody()
-]]></Implementation>
-</Method>
+/// This method Gets called prior to dispatch of the request. Put any common code here
+/// that you want to be executed for EVERY request. If pContinue is set to 0, the
+/// request will NOT be dispatched according to the UrlMap. If this case it's the
+/// responsibility of the user to return a response.
+ClassMethod OnPreDispatch(pUrl As %String, pMethod As %String, ByRef pContinue As %Boolean) As %Status
+{
+    Quit ..convertRequestBody()
+}
 
-<Method name="convertRequestBody">
-<Description>
-Конвертируем %request.Content в UTF8 и в объект класса %ZEN.proxyObject</Description>
-<ClassMethod>1</ClassMethod>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Конвертируем %request.Content в UTF8 и в объект класса %ZEN.proxyObject
+ClassMethod convertRequestBody() As %Status
+{
 	#dim %request As %CSP.Request
 	#dim obj As %ZEN.proxyObject
 	
@@ -129,7 +102,7 @@ responsibility of the user to return a response.</Description>
 	
 	set %request.Content = obj // obj это валидный UTF8 %ZEN.proxyObject
 	return $$$OK
-]]></Implementation>
-</Method>
-</Class>
-</Export>
+}
+
+}
+

@@ -1,28 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25">
-<Class name="SQLKPI.Generator">
-<Description>
-Generates kpi class</Description>
-<Abstract>1</Abstract>
-<TimeCreated>64244,40301.291978</TimeCreated>
+/// Generates kpi class
+Class SQLKPI.Generator [ Abstract ]
+{
 
-<XData name="kpi">
-<Description>
-This XData definition defines the kpi.</Description>
-<Data><![CDATA[
+/// This XData definition defines the kpi.
+XData kpi
+{
 <kpi
 xmlns="http://www.intersystems.com/deepsee/kpi"
  name="!!!1!!!" sourceType="sql"
  sql="!!!2!!!">
-]]></Data>
-</XData>
+}
 
-<Method name="generateKPIClass">
-<Description>
-do ##class(SQLKPI.Generator).generateKPIClass("SELECT name, type FROM Sample.Per", "KPIName", "try.kpi") </Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>sql:%String,name:%String,class:%String</FormalSpec>
-<Implementation><![CDATA[
+/// do ##class(SQLKPI.Generator).generateKPIClass("SELECT name, type FROM Sample.Per", "KPIName", "try.kpi") 
+ClassMethod generateKPIClass(sql As %String, name As %String, class As %String)
+{
 	#dim sc As %Status = $$$OK
 	
 	if '##class(%Dictionary.ClassDefinition).%ExistsId(class) {
@@ -65,21 +56,16 @@ do ##class(SQLKPI.Generator).generateKPIClass("SELECT name, type FROM Sample.Per
 	set sc = classObj.%Save()
 	return:$$$ISERR(sc) sc
 	return $System.OBJ.Compile(class, "cuks /displaylog=0 /displayerror=0")
-]]></Implementation>
-</Method>
+}
 
-<Method name="ReplaceRegexp">
-<Description>
-Replaces all occurances of Pattern with ReplacePattern.
-w $System.Status.GetErrorText(##class(SQLKPI.Generator).ReplaceRegexp(.Text))</Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec><![CDATA[&Text,Pattern:%String="",ReplacePattern:%String=""]]></FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Replaces all occurances of Pattern with ReplacePattern.
+/// w $System.Status.GetErrorText(##class(SQLKPI.Generator).ReplaceRegexp(.Text))
+ClassMethod ReplaceRegexp(ByRef Text, Pattern As %String = "", ReplacePattern As %String = "") As %Status
+{
 	#Dim Matcher As %Regex.Matcher = ##class(%Regex.Matcher).%New(Pattern, Text)
 	Set Text = Matcher.ReplaceAll(ReplacePattern)
     Quit Matcher.Status
-]]></Implementation>
-</Method>
-</Class>
-</Export>
+}
+
+}
+
