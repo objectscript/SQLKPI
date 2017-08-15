@@ -1,0 +1,19 @@
+<div ng-controller="menu">
+    <div class="navbar navbar-default">
+        <div class="col-md-offset-2 col-md-8">
+           <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <h1>SQLKPI
+                        <small ng-cloak>v{{model.version}}</small>
+                    </h1>
+                </div>
+
+                <div class="col-md-offset-5 col-sm-offset-5 col-md-3 col-sm-3 vcentred">
+                    <select class="form-control" ng-model="model.namespace" ng-change="updateNamespace()">
+                        <option ng-repeat="name in model.namespaces" ng-value="name">{{name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

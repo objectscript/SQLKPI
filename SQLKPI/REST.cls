@@ -5,68 +5,54 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 {
 <Routes>
 <Route Url="/sql" Method="POST" Call="executeSQL"/>
-<Route Url="/kpi" Method="POST" Call="generateKPI"/>
-<Route Url="/logout" Method="GET" Call="logout"/>
-<Route Url="/test" Method="GET" Call="test"/>
+<Route Url="/get_settings" Method="GET" Call="getServerSettings" />
+<Route Url="/get_packages" Method="GET" Call="getPackages" />
+<Route Url="/get_resources" Method="GET" Call="getResources" />
+<Route Url="/generate" Method="POST" Call="generate" />
 </Routes>
 }
 
 /// Logout current session
-ClassMethod logout() As %Status
-{
-    #dim %session As %CSP.Session
-    set st = %session.Logout(1)
-    set %session.EndSession = 1
-    return st
-}
-
-/// Test
-ClassMethod test() As %Status
-{
-    write "{""status"": ""OK""}"
-    return $$$OK
-}
-
 ClassMethod executeSQL() As %Status
 {
-	set sc = $$$OK
-	set rs = ##class(%SQL.Statement).%ExecDirect(,%request.Content.query)
-	
-	if (rs.%SQLCODE '= 0) && (rs.%SQLCODE '= 100) {
-		quit $$$ERROR(5521,rs.%SQLCODE,rs.%Message)
-	}
-	
-	set obj = ##class(%ZEN.proxyObject).%New()
-	set metadata = rs.%GetMetadata()
-	
-	set columnNames = ##class(%ListOfDataTypes).%New()
-	for i=1:1:metadata.columns.Count() {
-		set tCol = metadata.columns.GetAt(i)
-		do columnNames.Insert(tCol.colName)
-	}
-	
-	set obj."sql_code" = rs.%SQLCODE
-	set obj.columns = columnNames
-	set sc = obj.%ToJSON()
-	
-	quit sc
+	new $namespace
+	set namespace = %request.Get("ns")
+	set $namespace = namespace
+	set %response.ContentType = "application/json"
+	quit ##class(SQLKPI.Util).executeSql(%request.Content.query)
 }
 
-ClassMethod generateKPI() As %Status
+ClassMethod getServerSettings() As %Status
 {
-	set sql = %request.Content.SQL
-	set name = %request.Content.Name
-	set class = %request.Content.Class
-	
-	// TODO check that it's valid
-	
-	return ##class(SQLKPI.Generator).generateKPIClass(sql, name, class)
+	set obj = ##class(%ZEN.proxyObject).%New()
+	set obj.namespaces = ##class(SQLKPI.Util).getNamespaces()
+	do obj.%ToJSON()
+	return $$$OK
 }
 
-/// Specifies the default character set for the page.  This can be overriden using the
-/// &lt;CSP:CONTENT CHARSET=&gt; tag, or by setting the <b>%response</b>.CharSet property
-/// in the <method>OnPreHTTP</method> method.  If this parameter is not specified, then
-/// for the default charset is utf-8.
+ClassMethod getPackages() As %Status
+{
+	new $namespace
+	set namespace = %request.Get("ns")
+	set $namespace = namespace
+	quit ##class(SQLKPI.Util).getPackages()
+}
+
+ClassMethod getResources() As %Status
+{
+	new $namespace
+	set namespace = %request.Get("ns")
+	set $namespace = namespace
+	quit ##class(SQLKPI.Util).getResources()
+}
+
+ClassMethod generate() As %Status
+{
+	new $namespace
+	set namespace = %request.Get("ns")
+	set $namespace = namespace
+	quit ##class(SQLKPI.Util).generate(%request.Content)
+}
 
 }
 

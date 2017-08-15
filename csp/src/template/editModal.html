@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Edit</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="form-group">
+                <label for="edit_value" class="col-md-3 control-label">Value: </label>
+
+                <div class="col-md-8">
+                    <input id="edit_value" class="form-control" placeholder="Value"
+                           ng-model="model.edit_value" ng-value="model.valueObj.value">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="edit_displayName" class="col-md-3 control-label">Display Name: </label>
+
+                <div class="col-md-8">
+                    <input id="edit_displayName" class="form-control" placeholder="Display Name"
+                           ng-model="model.edit_displayName" ng-value="model.valueObj.displayName">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

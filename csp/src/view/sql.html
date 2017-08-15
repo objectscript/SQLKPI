@@ -1,0 +1,70 @@
+
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="row text-center">
+                <i>The first column of the query will be used as the <a
+                        href="http://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=D2MODADV_ch_kpi#D2MODADV_kpi_result_set"
+                            target="_blank"
+                        >KPI Series</a>.</i>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="sql_input">SQL Select Query:</label>
+
+                    <textarea id="sql_input" class="form-control" ng-model="model.query"
+                              placeholder="SELECT &hellip; FROM &hellip;" rows="4"
+                              ng-change="model.executed = false"></textarea>
+
+                    <div class="row indent">
+                        <div class="col-md-10">
+                            <div ng-hide="model.executed">
+                                <pre><i>To continue, compute the query.</i></pre>
+                            </div>
+
+                            <div ng-show="model.executed">
+                                <pre><i>The first 5 lines of the result of your query are displayed.</i></pre>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button class="btn btn-success" ng-click="executeSQL()" type="button">Compute</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="table-container">
+                <table class="table table-striped" st-table="model.executed_data.result">
+                    <thead>
+                    <th ng-repeat="col in model.executed_data.columns">{{col.name}}</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in model.executed_data.result">
+                            <td ng-repeat="col in model.executed_data.columns">{{row[col.name]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="row indent">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" ng-click="prevPage()">< Back</button>
+                    </div>
+
+                    <div class="col-md-offset-8 col-md-2">
+                            <button uib-tooltip="To continue, compute the query."
+                                    tooltip-enable="!model.executed" class="btn btn-primary" ng-click="nextPage()"
+                                    type="button" ng-class="{'disabled': !model.executed}">Next ></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

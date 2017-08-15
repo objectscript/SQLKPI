@@ -1,9 +1,17 @@
+Include (%occErrors, %ZEN.Utils)
+
 Class SQLKPI.AbstractREST Extends %CSP.REST
 {
 
 Parameter HandleCorsRequest = 1;
 
 Parameter UseSession As Integer = 1;
+
+/// Specifies the default character set for the page.  This can be overriden using the
+/// &lt;CSP:CONTENT CHARSET=&gt; tag, or by setting the <b>%response</b>.CharSet property
+/// in the <method>OnPreHTTP</method> method.  If this parameter is not specified, then
+/// for the default charset is utf-8.
+Parameter CHARSET = "UTF-8";
 
 /// This method takes a status, renders it as jason (if requested) and outputs the result
 ClassMethod outputStatus(pSC As %Status) As %Status [ Internal ]
@@ -102,6 +110,19 @@ ClassMethod convertRequestBody() As %Status
 	
 	set %request.Content = obj // obj это валидный UTF8 %ZEN.proxyObject
 	return $$$OK
+}
+
+/// Issue an '500' error and give some indication as to what occurred
+ClassMethod Http500(pE As %Exception.AbstractException) As %Status
+{
+	// we are expecting status
+	#; Set the response Http status
+	set %response.Status="500 Internal Server Error"
+
+	#; Return a helpful error string
+	write "{""ERROR"":"_$$$ZENJSSTR($System.Status.GetErrorText(pE.AsStatus(),%session.Language))_"}"
+
+	quit $$$OK
 }
 
 }

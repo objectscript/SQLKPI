@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="app">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,20 +11,38 @@
     <script src="src/lib/angular.min.js"></script>
     <script src="src/lib/angular-route.min.js"></script>
     <script src="src/lib/angular-notify.min.js"></script>
+    <script src="src/lib/angular-animate.min.js"></script>
+    <script src="src/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="src/lib/smart-table.min.js"></script>
+    <script src="src/lib/select-tpls.min.js"></script>
     <!--Libraries: JS-->
 
     <!--Libraries: CSS-->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/angular-notify.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/select.min.css">
     <link rel="stylesheet" href="css/custom.css">
     <!--Libraries: CSS-->
 
     <!--Build application-->
     <script src="src/app.js"></script>
+    <script src="src/services/connector.js"></script>
+    <script src="src/services/storage.js"></script>
     <script src="src/controller/main.js"></script>
+    <script src="src/controller/menu.js"></script>
+    <script src="src/controller/sql.js"></script>
+    <script src="src/controller/config.js"></script>
+    <script src="src/controller/filters.js"></script>
+    <script src="src/controller/editModal.js"></script>
+    <script src="src/controller/warningModal.js"></script>
     <!--Build application-->
 </head>
-<body>
-<div ng-view=""></div>
+<body ng-app="app" ng-controller="main">
+
+<div ng-include="'src/view/menu.html'"></div>
+<hr class="col-md-offset-3 col-md-6" />
+    <div class="container" ng-view=""></div>
+<hr class="col-md-offset-3 col-md-6" />
+
 </body>
 </html>

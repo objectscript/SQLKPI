@@ -1,0 +1,101 @@
+<form class="form-horizontal">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="row">
+                <div class="form-group">
+                    <label for="packageName" class="col-md-3 control-label">Package Name:* </label>
+
+                    <div class="col-md-9">
+                        <oi-select
+                                id="packageName"
+                                oi-options="package for package in model.packages"
+                                oi-select-options="{
+                                    newItem: true,
+                                    newItemFn: 'model.packageName = $query'
+                                }"
+                                ng-model="model.packageName"
+                                placeholder="Package Name"
+                        ></oi-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="className" class="col-md-3 control-label">Class Name:* </label>
+
+                    <div class="col-md-9">
+                        <input id="className" class="form-control" placeholder="Class Name" ng-model="model.className">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="KPIName" class="col-md-3 control-label">KPI Name*: </label>
+
+                    <div class="col-md-9">
+                        <input id="KPIName" class="form-control" placeholder="Such as, MyFolder/MyKPI" ng-model="model.KPIName" ng-value="model.className">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="KPICaption" class="col-md-3 control-label un-bold">KPI Caption: </label>
+
+                    <div class="col-md-9">
+                        <input id="KPICaption" class="form-control" placeholder="KPI Caption" ng-model="model.KPICaption">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="description" class="col-md-3 control-label un-bold">Description: </label>
+
+                    <div class="col-md-9">
+                        <textarea id="description" class="form-control"
+                                  placeholder="Description" ng-model="model.description" rows="4">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="domain" class="col-md-3 control-label un-bold">Domain: </label>
+
+                    <div class="col-md-9">
+                        <input id="domain" class="form-control" placeholder="Domain" ng-model="model.domain">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="resource" class="col-md-3 control-label un-bold">Resource: </label>
+
+                    <div class="col-md-9">
+                        <oi-select
+                                id="resource"
+                                oi-options="resource for resource in model.resources"
+                                oi-select-options="{
+                                    newItem: true,
+                                    newItemFn: 'model.resource = $query'
+                                }"
+                                ng-model="model.resource"
+                                placeholder="Resource"
+                        ></oi-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-offset-10 col-md-2">
+                    <button class="btn btn-primary" ng-click="nextPage()">Next ></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

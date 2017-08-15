@@ -1,0 +1,151 @@
+<div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="row">
+                <div ng-if="model.filters.length == 0" class="text-center">
+                    <i style="color: #aaaaaa; font-size: 20px;">You do not have the properties that you could make the filters.</i>
+                </div>
+                <div class="panel" ng-repeat="(f_idx,filter) in model.filters"
+                     ng-class="{'panel-open panel-success':filter.active, 'panel-warning': !filter.active}">
+                    <div class="panel-heading none-selectable">
+                        <div class="row">
+                            <label class="col-md-12">
+                                <div class="col-md-1">
+                                    <input type="checkbox" ng-model="filter.active" class="ng-hide" ng-change="checkDepends(filter)">
+                                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true" ng-if="filter.active"></span>
+                                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-if="!filter.active"></span>
+                                </div>
+
+                                <div class="panel-title col-md-11"> <span class="un-bold">Filter for</span> {{filter.filterProperty}}</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="panel-collapse collapse" ng-class="{'in':filter.active}">
+                        <div class="panel-body">
+                            <div class="row">
+                                <label class="col-md-2 control-label" >Display Name:* </label>
+
+                                <div class="col-md-4">
+                                    <input class="form-control" ng-model="filter.displayName">
+                                </div>
+
+                                <label class="col-md-2 control-label un-bold">Depends On: </label>
+
+                                <div class="col-md-4" >
+                                    <select ng-model="filter.dependsOn" class="form-control">
+                                        <option value=""></option>
+                                        <option ng-repeat="depend in model.filters | filter :{active: true,
+                                                                                              name:'!'+filter.name,
+                                                                                              dependsOn:'!'+filter.name}"
+                                                value="{{depend.name}}" >{{depend.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-md-offset-2 col-md-4 un-bold">
+                                    <input type="checkbox" ng-model="filter.multiSelect" > Multiple Select</label>
+                            </div>
+
+                            <div ng-if="!filter.searchType">
+                                <div class="row">
+                                    <div class="col-md-8"><pre class="text-center"><i>Choose how you want to fill the filter values:</i></pre></div>
+                                    <div class="col-md-4">
+                                        <select ng-model="filter.runtime" class="form-control">
+                                            <option value="1">SQL</option>
+                                            <option value="">Value List</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12" ng-if="!!filter.runtime">
+                                        <textarea class="form-control" ng-model="filter.sql"
+                                                  placeholder="SELECT &hellip; FROM &hellip;" rows="4">
+                                        </textarea>
+                                    </div>
+
+                                    <div class="col-md-12" ng-if="!filter.runtime">
+                                        <div class="form-inline text-center">
+                                            <div class="form-group">
+                                                <label class="un-bold">Value: </label>
+                                                <input class="form-control" ng-model="filter.current_value">
+                                            </div>
+                                            <div class="form-group col-md-offset-1">
+                                                <label class="un-bold">Display Name: </label>
+                                                <input id="cur_displayName_{{f_idx}}" class="form-control"
+                                                       ng-model="filter.current_displayName" ng-value="filter.current_value" onclick="this.select()">
+                                            </div>
+                                            <button class="btn btn-default" type="button" ng-click="addToValueList(f_idx)">Add</button>
+                                        </div>
+
+                                        <div class="scroll-box text-center">
+                                            <div ng-if="filter.valueList.length == 0">
+                                                <i style="color: #aaaaaa;">Please, add value into list.</i>
+                                            </div>
+
+                                            <div class="row indent" ng-repeat="(idx,value) in filter.valueList">
+                                                <div class="col-md-1"></div>
+
+                                                <div class="btn-group col-md-11" role="group" aria-label="...">
+                                                    <div class="btn-group col-md-10 list-elem">
+                                                        <div class="col-md-6">{{value.value}}</div>
+                                                        <div class="col-md-6 vline">{{value.displayName}}</div>
+                                                    </div>
+
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary"
+                                                                ng-click="editValueListElem(value)"
+                                                                tooltip-placement="left"
+                                                                uib-tooltip="Edit display value.">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </button>
+
+                                                        <button class="btn btn-danger"
+                                                                ng-click="removeFromValueList(f_idx,idx)"
+                                                                tooltip-placement="left"
+                                                                uib-tooltip="Delete value.">
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row indent">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" ng-click="prevPage()">< Back</button>
+                </div>
+
+                <div class="col-md-offset-8 col-md-2">
+                    <button class="btn btn-success" ng-click="generate()">Generate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scroll-control">
+    <a class="un-decorate" ng-click="scrollToTop()">
+        <div class="lab-container">
+            <div class="label label-default text-center">
+                <span class="glyphicon glyphicon-menu-up"></span>
+            </div>
+        </div>
+    </a>
+
+    <a  class="un-decorate" ng-click="scrollToBottom()">
+        <div class="lab-container">
+            <div class="label label-default text-center">
+                <span class="glyphicon glyphicon-menu-down"></span>
+            </div>
+        </div>
+    </a>
+</div>

@@ -1,2 +1,59 @@
 textarea { resize: none; }
+
 .row.indent {  margin: 2px 0; }
+
+.animate-show-hide.ng-hide { opacity: 0; }
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+    transition: all linear 0.5s;
+}
+
+.check-element { opacity: 1; }
+
+.vcentred { margin-top: 2%; }
+.un-bold { font-weight: normal; }
+
+.none-selectable { user-select: none;}
+.panel .panel-heading label:hover {  cursor: pointer; }
+.panel .panel-heading span.glyphicon {margin-top: 2px;}
+
+.scroll-control {
+    position: fixed;
+    left: 1%;
+    bottom: 1%;
+}
+
+.scroll-control .label {
+    opacity: 0.2;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.scroll-control .label:hover {
+    opacity: 0.6;
+}
+
+.scroll-control .lab-container {
+    display: grid;
+    margin: 1px;
+}
+.un-decorate { text-decoration: none }
+
+.scroll-box {
+    margin-top: 1%;
+    overflow: auto;
+    max-height: 12em;
+}
+
+.list-elem {
+    border: solid 1px #aaaaaa;
+    border-right: none;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+.vline{
+    border-left: 1px solid #aaaaaa;
+}
