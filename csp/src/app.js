@@ -5,7 +5,7 @@
     angular.module('app',['ngRoute','cgNotify','smart-table','oi.select','ngAnimate','ui.bootstrap','templates'])
         .constant('CONST', {
             'ver': "{{package.json.version}}",
-            'host': /*location.host,*/ "localhost:57773",
+            'host': location.host, /*"localhost:57773",*/
             'protocol': location.protocol,
             'application': 'sqlkpi'
         })
