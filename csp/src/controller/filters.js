@@ -1,5 +1,5 @@
 (function () {
-    'use strict'
+    'use strict';
     function FiltersCtrl($scope, $location, $uibModal, Connector, Storage, notify) {
         $scope.model = {
             filters: []
@@ -12,7 +12,7 @@
         };
 
         $scope.scrollToBottom = function () {
-            window.scrollTo(0,document.body.scrollHeight)
+            window.scrollTo(0,document.body.scrollHeight);
         };
 
         $scope.addToValueList = addToValueList;
@@ -46,7 +46,7 @@
 
         function editValueListElem(elem) {
            var instance = $uibModal.open({
-               templateUrl: 'src/template/editModal.html',
+               templateUrl: 'src/view/editModal.html',
                controller: 'edit',
                ariaLabelledBy: 'modal-title',
                ariaDescribedBy: 'modal-body',
@@ -59,18 +59,18 @@
            });
         }
 
-        function checkDepends(filter) {
-            if (filter.active) {
-                filter.dependsOn = "";
+        function checkDepends(cur_filter) {
+            if (cur_filter.active) {
+                cur_filter.dependsOn = "";
                 return;
             }
 
             for (var i = 0; i < $scope.model.filters.length; i++) {
                 if ($scope.model.filters[i].dependsOn) {
-                    if ($scope.model.filters[i].active && !$scope.model.filters[i].dependsOn.localeCompare(filter.name)) {
+                    if ($scope.model.filters[i].active && !$scope.model.filters[i].dependsOn.localeCompare(cur_filter.name)) {
 
                         var instance = $uibModal.open({
-                            templateUrl: 'src/template/warningModal.html',
+                            templateUrl: 'src/view/warningModal.html',
                             controller: 'warning',
                             ariaLabelledBy: 'modal-title',
                             ariaDescribedBy: 'modal-body',
@@ -78,7 +78,7 @@
                             size: 'sm',
                             resolve: {
                                 filter: function () {
-                                    return filter;
+                                    return cur_filter;
                                 }
                             }
                         });
@@ -94,7 +94,7 @@
 
                             for (var i = 0; i < $scope.model.filters.length; i++) {
                                 if ($scope.model.filters[i].dependsOn === null) {
-                                    $scope.model.filters[i].dependsOn = filter.name;
+                                    $scope.model.filters[i].dependsOn = cur_filter.name;
                                 }
                             }
                         });

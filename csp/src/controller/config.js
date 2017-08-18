@@ -1,5 +1,5 @@
 (function () {
-    'use strict'
+    'use strict';
     function ConfigCtrl($scope, notify, Connector, Storage, $rootScope,$location) {
         $scope.model = {
             packages: [],

@@ -1,4 +1,4 @@
-Class SQLKPI.Util
+Class SQLKPI.Util [ Abstract ]
 {
 
 ClassMethod executeSql(query As %String) As %Status

@@ -1,1 +1,4 @@
 csp/.idea
+.idea
+node_modules
+build

@@ -1,10 +1,10 @@
 (function () {
-    'use strict'
+    'use strict';
     function MenuCtrl($scope, CONST, Storage, $rootScope, $location) {
         $scope.model = {
             version: CONST.ver,
             namespaces: [],
-            namespace: "" || localStorage.namespace
+            namespace: ""
         };
 
         var _mainScope = $scope.$parent;

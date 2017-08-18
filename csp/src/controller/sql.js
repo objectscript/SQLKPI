@@ -1,5 +1,5 @@
 (function () {
-    'use strict'
+    'use strict';
     function SqlCtrl($scope, notify, $location, Storage, Connector) {
         $scope.model = {
             query: '',

@@ -1,5 +1,5 @@
 (function () {
-    'use strict'
+    'use strict';
     function MainCtrl($scope, $q) {
 
         $scope.model = {

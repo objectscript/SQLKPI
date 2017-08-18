@@ -1,5 +1,5 @@
 (function () {
-    'use strict'
+    'use strict';
     function ModalEditCtrl($scope, value, $uibModalInstance) {
         $scope.model={
             valueObj : value,

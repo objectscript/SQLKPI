@@ -1,5 +1,5 @@
 (function () {
-    'use strict'
+    'use strict';
     function ConnectorSvc($http, CONST, notify) {
         this.firstRun = true;
         this.loadSettings = loadSettings;
@@ -28,7 +28,7 @@
             return $http({
                 method:'GET',
                 url: CONST.protocol + '//' + CONST.host + '/' + CONST.application + '/get_resources'
-            })
+            });
         }
 
         function executeSQL(query, namespace) {
@@ -39,7 +39,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            });
         }
 
         function generateKPI(sendData, namespace) {
@@ -47,7 +47,7 @@
                 method: 'POST',
                 data: sendData,
                 url: CONST.protocol + '//' + CONST.host + '/' + CONST.application + '/generate?ns='+namespace,
-            })
+            });
         }
 
         function unhandledErrors(status) {
@@ -58,5 +58,5 @@
         }
     }
 
-    angular.module('app').service('Connector',['$http', 'CONST', 'notify', ConnectorSvc])
+    angular.module('app').service('Connector',['$http', 'CONST', 'notify', ConnectorSvc]);
 })();

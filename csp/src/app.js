@@ -1,9 +1,11 @@
 (function() {
-    'use strict'
-    angular.module('app',['ngRoute','cgNotify','smart-table','oi.select','ngAnimate','ui.bootstrap'])
+    'use strict';
+    angular.module('templates',[]);
+
+    angular.module('app',['ngRoute','cgNotify','smart-table','oi.select','ngAnimate','ui.bootstrap','templates'])
         .constant('CONST', {
-            'ver': '0.1',
-            'host': location.host,
+            'ver': "{{package.json.version}}",
+            'host': /*location.host,*/ "localhost:57773",
             'protocol': location.protocol,
             'application': 'sqlkpi'
         })
@@ -25,7 +27,7 @@
                 resolve: {settings:['Connector', 'Storage', '$q', 'notify', '$rootScope', settingsResolver]}
             })
             .otherwise('/config');
-        }])
+        }]);
 
 
     function settingsResolver(Connector, Storage, $q, notify, $rootScope) {
@@ -49,7 +51,7 @@
                         classes: 'alert-danger'
                     });
                 } else {
-                    Connector.unhandledErrors(response.status)
+                    Connector.unhandledErrors(response.status);
                 }
 
                 deffered.reject();
