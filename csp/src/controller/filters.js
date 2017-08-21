@@ -60,6 +60,8 @@
         }
 
         function checkDepends(cur_filter) {
+            var dep = false; //The result of the dependency test.
+
             if (cur_filter.active) {
                 cur_filter.dependsOn = "";
                 return;
@@ -68,40 +70,42 @@
             for (var i = 0; i < $scope.model.filters.length; i++) {
                 if ($scope.model.filters[i].dependsOn) {
                     if ($scope.model.filters[i].active && !$scope.model.filters[i].dependsOn.localeCompare(cur_filter.name)) {
-
-                        var instance = $uibModal.open({
-                            templateUrl: 'src/view/warningModal.html',
-                            controller: 'warning',
-                            ariaLabelledBy: 'modal-title',
-                            ariaDescribedBy: 'modal-body',
-                            animation: true,
-                            size: 'sm',
-                            resolve: {
-                                filter: function () {
-                                    return cur_filter;
-                                }
-                            }
-                        });
-
-                        instance.result.then(function () {
-
-                            for (var i = 0; i < $scope.model.filters.length; i++) {
-                                if ($scope.model.filters[i].dependsOn === null) {
-                                    $scope.model.filters[i].dependsOn = "";
-                                }
-                            }
-                        }, function () {
-
-                            for (var i = 0; i < $scope.model.filters.length; i++) {
-                                if ($scope.model.filters[i].dependsOn === null) {
-                                    $scope.model.filters[i].dependsOn = cur_filter.name;
-                                }
-                            }
-                        });
-
+                        dep = true;
                         break;
                     }
                 }
+            }
+
+            if (dep) {
+                var instance = $uibModal.open({
+                    templateUrl: 'src/view/warningModal.html',
+                    controller: 'warning',
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    animation: true,
+                    size: 'sm',
+                    resolve: {
+                        filter: function () {
+                            return cur_filter;
+                        }
+                    }
+                });
+
+                instance.result.then(function () {
+
+                    for (var i = 0; i < $scope.model.filters.length; i++) {
+                        if ($scope.model.filters[i].dependsOn === null) {
+                            $scope.model.filters[i].dependsOn = "";
+                        }
+                    }
+                }, function () {
+
+                    for (var i = 0; i < $scope.model.filters.length; i++) {
+                        if ($scope.model.filters[i].dependsOn === null) {
+                            $scope.model.filters[i].dependsOn = cur_filter.name;
+                        }
+                    }
+                });
             }
         }
         
