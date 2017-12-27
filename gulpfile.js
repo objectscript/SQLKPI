@@ -26,13 +26,23 @@ gulp.task('lint', function () {
 });
 
 gulp.task('minify:js', function () {
+    var assets = useref.assets();
     return gulp.src('./csp/index.html')
-        .pipe(useref())
+        .pipe(assets)
         .pipe(gulpIf("*.js",replace('"{{package.json.version}}"', '"' + p.version + '"')))
         .pipe(gulpIf("*.js",traceur()))
         .pipe(gulpIf("*.js",uglify()))
         .pipe(gulpIf("*.html",htmlmin({empty: false})))
-        .pipe(gulp.dest('build'));
+        .pipe(assets.restore())
+        .pipe(useref())
+        //.pipe(gulp.dest('build'))
+        .pipe(through.obj(function (chunk, enc, cb) {
+            if (!fs.existsSync("./build")) fs.mkdirSync("./build");
+            if (!fs.existsSync("./build/src")) fs.mkdirSync("./build/src");
+            fs.writeFileSync("./build/"+chunk.relative, chunk.contents);
+            cb(null, chunk);
+        }))
+        .pipe(debug({title: "after save"}));
 });
 
 gulp.task('minify:css', function () {
