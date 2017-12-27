@@ -26,23 +26,9 @@ gulp.task('lint', function () {
 });
 
 gulp.task('minify:js', function () {
-    var assets = useref.assets();
-    return gulp.src('./csp/index.html')
-        .pipe(assets)
-        .pipe(gulpIf("*.js",replace('"{{package.json.version}}"', '"' + p.version + '"')))
-        .pipe(gulpIf("*.js",traceur()))
-        .pipe(gulpIf("*.js",uglify()))
-        .pipe(gulpIf("*.html",htmlmin({empty: false})))
-        .pipe(assets.restore())
-        .pipe(useref())
-        //.pipe(gulp.dest('build'))
-        .pipe(through.obj(function (chunk, enc, cb) {
-            if (!fs.existsSync("./build")) fs.mkdirSync("./build");
-            if (!fs.existsSync("./build/src")) fs.mkdirSync("./build/src");
-            fs.writeFileSync("./build/"+chunk.relative, chunk.contents);
-            cb(null, chunk);
-        }))
-        .pipe(debug({title: "after save"}));
+    return gulp.src('csp/src/**/*.*')
+        .pipe(gulpIf('*.js', replace('"{{package.json.version}}"', '"' + p.version + '"')))
+        .pipe(gulp.dest('build/src'));
 });
 
 gulp.task('minify:css', function () {
@@ -52,27 +38,32 @@ gulp.task('minify:css', function () {
         .pipe(gulp.dest('build/css'))
 });
 
-gulp.task('minify:template', function () {
+/*gulp.task('minify:template', function () {
     return gulp.src('csp/src/view/*.html')
         .pipe(htmlmin({empty: false}))
         .pipe(templateCache({root:"src/view"}))
         .pipe(gulp.dest('build/src/'))
-});
+});*/
 
-gulp.task('concat-with-templates', function () {
+/*gulp.task('concat-with-templates', function () {
     return gulp.src(['build/src/app.js', 'build/src/templates.js'])
         .pipe(concat('app.js'))
         .pipe(gulp.dest('build/src'))
-});
+});*/
 
 gulp.task('copy:csslibs', function () {
     return gulp.src('csp/css/*.min.css')
         .pipe(gulp.dest('build/css'));
 });
 
-gulp.task('copy:jslibs', function () {
+/*gulp.task('copy:jslibs', function () {
     return gulp.src('csp/src/lib/*.*')
         .pipe(gulp.dest('build/src/lib'))
+});*/
+
+gulp.task('copy:jslibs', function () {
+    return gulp.src('csp/index.html')
+        .pipe(gulp.dest('build'))
 });
 
 gulp.task('copy:fonts', function () {
@@ -221,7 +212,7 @@ gulp.task('cleanup:after-creating-installer', function () {
     });
 });
 
-gulp.task('minify', gulp.series(gulp.parallel('minify:js','minify:css','minify:template'), 'concat-with-templates'));
+gulp.task('minify', gulp.series(gulp.parallel('minify:js','minify:css'/*,'minify:template'*/)/*, 'concat-with-templates'*/));
 gulp.task('copy', gulp.parallel('copy:csslibs','copy:jslibs','copy:fonts'));
 gulp.task('build', gulp.series(gulp.parallel('lint','cleanup:before-build'),gulp.parallel('minify','copy'),'cleanup:after-build'));
 gulp.task('create-xml-installer', gulp.series(
